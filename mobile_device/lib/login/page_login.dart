@@ -16,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   String email = '';
   String password = '';
   String error = '';
+  bool isLoggedIn = false; // Ban đầu, chưa đăng nhập
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +92,15 @@ class _LoginPageState extends State<LoginPage> {
                       setState(() =>
                       error = 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.');
                     } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LaptopInterface(),
-                        ),
+                      onLoginSuccess() {
+                        setState(() {
+                          isLoggedIn = true; // Đã đăng nhập
+                        });
+                      }
+                      setState(() {
+                        isLoggedIn = true; // Đã đăng nhập
+                      });
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => LaptopInterface(),),
                       );
                     }
                   }
