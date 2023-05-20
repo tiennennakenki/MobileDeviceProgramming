@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_device/firebase/firebase_data.dart';
 import 'package:mobile_device/login/page_login.dart';
+import 'package:mobile_device/register/page_register.dart';
 
 import '../firebase/firebase_connect.dart';
 
@@ -54,8 +55,17 @@ class PageLaptop extends StatelessWidget {
             ),
 
             ListTile(
-              leading: Icon(Icons.drafts),
-              title: Text("Drafts"),
+              leading: Icon(Icons.login),
+              title: Text("Đăng ký"),
+              onTap: () {
+                // Xử lý khi nhấn vào nút đăng nhập
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegisterPage(),
+                  ),
+                );
+              },
             ),
 
           ],
