@@ -131,8 +131,12 @@ class _RegisterPageState extends State<RegisterPage> {
               SizedBox(height: 10.0),
               TextButton(
                 onPressed: () {
-                  // Xử lý chuyển sang trang đăng nhập
-                  print('Chuyển sang trang đăng nhập');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  );
                 },
                 child: Text(
                   'Đăng nhập',
