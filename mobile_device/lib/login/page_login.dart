@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_device/register/page_register.dart';
 
 import 'laptop_connect.dart';
@@ -92,15 +94,12 @@ class _LoginPageState extends State<LoginPage> {
                       setState(() =>
                       error = 'Đăng nhập không thành công. Vui lòng kiểm tra lại thông tin đăng nhập.');
                     } else {
-                      onLoginSuccess() {
-                        setState(() {
-                          isLoggedIn = true; // Đã đăng nhập
-                        });
-                      }
                       setState(() {
                         isLoggedIn = true; // Đã đăng nhập
                       });
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => LaptopInterface(),),
+                      Navigator.push(context,MaterialPageRoute(
+                        builder: (context) => LaptopInterface(isLoggedIn: isLoggedIn,),
+                        ),
                       );
                     }
                   }
@@ -117,6 +116,43 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () async {
+                  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+                  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+                  final credential = GoogleAuthProvider.credential(
+                    accessToken: googleAuth?.accessToken,
+                    idToken: googleAuth?.idToken,
+                  );
+                  FirebaseAuth.instance.signInWithCredential(credential)
+                      .then((value) {
+                    if (value != null) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => LaptopInterface(isLoggedIn: isLoggedIn,)),
+                            (route) => false,
+                      );
+                    }
+                  }).catchError((error) {
+                    print(error);
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset('asset/images/logo_google.png',height: 20,width: 20,),
+                      SizedBox(width: 10), Text('Đăng nhập bằng Google', style: TextStyle(fontSize: 16),),
+                    ],),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    onPrimary: Colors.black,
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 2,
+                  ),
+                ),
               SizedBox(height: 10.0),
               TextButton(
                 onPressed: () {

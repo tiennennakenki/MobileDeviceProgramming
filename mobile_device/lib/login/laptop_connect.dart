@@ -8,22 +8,24 @@ import 'package:mobile_device/register/page_register.dart';
 import '../firebase/firebase_connect.dart';
 
 class LaptopInterface extends StatelessWidget {
-  const LaptopInterface({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  const LaptopInterface({Key? key, required this.isLoggedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MyFireBaseConnect(
       errorMessage: "Lỗi",
       connectingMessage: "Đang kết nối",
-      builder: (context) => PageLaptop(laptop: Laptop(),),
+      builder: (context) => PageLaptop(laptop: Laptop(), isLoggedIn: isLoggedIn),
     );
   }
 }
 
+
 class PageLaptop extends StatelessWidget {
   final Laptop laptop;
-  PageLaptop({required this.laptop});
-
+  PageLaptop({required this.laptop, required this.isLoggedIn});
+  final bool isLoggedIn;
 
   @override
   Widget build(BuildContext context) {
@@ -31,48 +33,49 @@ class PageLaptop extends StatelessWidget {
       appBar: AppBar(
         title: Text("Firebase App"),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text("Phan Minh Tiến"),
-              accountEmail: Text("tien.pm.62cntt@ntu.edu.vn"),
-              currentAccountPicture: CircleAvatar(
-                //child: Text("MT"),
-                backgroundImage: AssetImage("asset/images/img.png"),
-              ),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.login),
-              title: Text("Đăng nhập"),
-              onTap: () {
-                // Xử lý khi nhấn vào nút đăng nhập
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
+      drawer: isLoggedIn ?
+        null :
+          Drawer(
+            child: Column(
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text("Phan Minh Tiến"),
+                  accountEmail: Text("tien.pm.62cntt@ntu.edu.vn"),
+                  currentAccountPicture: CircleAvatar(
+                    //child: Text("MT"),
+                    backgroundImage: AssetImage("asset/images/img.png"),
                   ),
-                );
-              },
-            ),
+                ),
 
-            ListTile(
-              leading: Icon(Icons.login),
-              title: Text("Đăng ký"),
-              onTap: () {
-                // Xử lý khi nhấn vào nút đăng nhập
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RegisterPage(),
-                  ),
-                );
-              },
-            ),
+                ListTile(
+                  leading: Icon(Icons.login),
+                  title: Text("Đăng nhập"),
+                  onTap: () {
+                    // Xử lý khi nhấn vào nút đăng nhập
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  },
+                ),
 
-          ],
-        ),
+                ListTile(
+                  leading: Icon(Icons.login),
+                  title: Text("Đăng ký"),
+                  onTap: () {
+                    // Xử lý khi nhấn vào nút đăng nhập
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RegisterPage(),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
       ),
       body: StreamBuilder<List<LaptopSnapShot>>(
           stream: LaptopSnapShot.getAll2(),
