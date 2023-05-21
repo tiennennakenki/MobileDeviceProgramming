@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mobile_device/product/general_interface.dart';
 import 'login/laptop_connect.dart';
 import 'login/page_login.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LaptopInterface(isLoggedIn: isLoggedIn,),
+      home: GeneralInterface(isLoggedIn: isLoggedIn,),
     );
   }
 }

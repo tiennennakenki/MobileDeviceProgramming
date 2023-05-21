@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_device/register/page_register.dart';
-
+import '../product/general_interface.dart';
 import 'laptop_connect.dart';
 import 'auth_service.dart';
 
 class LoginPage extends StatefulWidget {
+  final bool isLoggedIn;
+  const LoginPage({super.key, required this.isLoggedIn});
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -98,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                         isLoggedIn = true; // Đã đăng nhập
                       });
                       Navigator.push(context,MaterialPageRoute(
-                        builder: (context) => LaptopInterface(isLoggedIn: isLoggedIn,),
+                        builder: (context) => GeneralInterface(isLoggedIn: isLoggedIn,),
                         ),
                       );
                     }
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                         isLoggedIn = true; // Đã đăng nhập
                       });
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => LaptopInterface(isLoggedIn: isLoggedIn,)),
+                        MaterialPageRoute(builder: (context) => GeneralInterface(isLoggedIn: isLoggedIn,)),
                             (route) => false,
                       );
                     }
