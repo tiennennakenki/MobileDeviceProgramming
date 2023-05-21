@@ -4,12 +4,16 @@ import '../firebase/firebase_data.dart';
 import '../product/product_detail.dart';
 
 class CartScreen extends StatefulWidget {
+  final bool isLoggedIn;
+  const CartScreen({super.key, required this.isLoggedIn});
   @override
-  _CartScreenState createState() => _CartScreenState();
+  _CartScreenState createState() => _CartScreenState(isLoggedIn: isLoggedIn);
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final bool isLoggedIn;
 
+  _CartScreenState({required this.isLoggedIn});
   @override
   void initState() {
     super.initState();
@@ -56,7 +60,6 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Cart.instance;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Giỏ hàng'),
@@ -99,7 +102,7 @@ class _CartScreenState extends State<CartScreen> {
                           gia: laptop.gia,
                           hinhAnh: laptop.hinhAnh,
                           moTa: laptop.moTa,
-                        )),
+                        ), isLoggedIn: isLoggedIn, ),
                       ),
                     );
                   },

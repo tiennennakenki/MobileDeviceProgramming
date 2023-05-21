@@ -5,7 +5,8 @@ import '../firebase/firebase_data.dart';
 
 class ProductDetail extends StatelessWidget {
   final Laptop laptop;
-  ProductDetail({required this.laptop});
+  final bool isLoggedIn;
+  ProductDetail({required this.laptop, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +64,8 @@ class ProductDetail extends StatelessWidget {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              Cart.instance.addToCart(laptop); // Thêm mặt hàng vào giỏ hàng khi người dùng bấm nút
+            onPressed: isLoggedIn ? () {
+              Cart.instance.addToCart(laptop);
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -75,16 +76,16 @@ class ProductDetail extends StatelessWidget {
                       TextButton(
                         child: Text('OK'),
                         onPressed: () {
-                          Navigator.pop(context); // Đóng hộp thoại
+                          Navigator.pop(context);
                         },
                       ),
                     ],
                   );
                 },
               );
-            },
+            } : null,
             child: const Text('Thêm vào giỏ hàng'),
-          ),
+          )
         ],
       ),
     );
