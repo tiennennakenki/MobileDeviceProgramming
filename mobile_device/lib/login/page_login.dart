@@ -128,6 +128,9 @@ class _LoginPageState extends State<LoginPage> {
                   FirebaseAuth.instance.signInWithCredential(credential)
                       .then((value) {
                     if (value != null) {
+                      setState(() {
+                        isLoggedIn = true; // Đã đăng nhập
+                      });
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => LaptopInterface(isLoggedIn: isLoggedIn,)),
                             (route) => false,
