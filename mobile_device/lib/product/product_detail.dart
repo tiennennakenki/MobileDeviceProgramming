@@ -48,7 +48,6 @@ class ProductDetail extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(width: 20),
-
             ],
           ),
           SizedBox(height: 15),

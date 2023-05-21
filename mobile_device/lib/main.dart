@@ -4,11 +4,13 @@ import 'login/laptop_connect.dart';
 import 'login/page_login.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  bool isLoggedIn = false;
 
   // This widget is the root of your application.
   @override
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: LaptopInterface(),
+      home: LaptopInterface(isLoggedIn: isLoggedIn,),
     );
   }
 }
