@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Laptop{
+class Laptop {
   String? ten, thuongHieu, moTa, hinhAnh, gia;
-
 
   Laptop({this.ten, this.thuongHieu, this.moTa, this.hinhAnh, this.gia});
 
@@ -27,23 +27,23 @@ class Laptop{
   }
 }
 
-class LaptopSnapShot{
+class LaptopSnapShot {
   Laptop? laptop;
   DocumentReference? documentReference;
 
   LaptopSnapShot({
     required this.laptop,
-    required this.documentReference
+    required this.documentReference,
   });
 
-  factory LaptopSnapShot.fromSnapShot(DocumentSnapshot docSnapLaptop){
+  factory LaptopSnapShot.fromSnapShot(DocumentSnapshot docSnapLaptop) {
     return LaptopSnapShot(
-        laptop: Laptop.fromJson(docSnapLaptop.data() as Map<String, dynamic>),
-        documentReference: docSnapLaptop.reference
+      laptop: Laptop.fromJson(docSnapLaptop.data() as Map<String, dynamic>),
+      documentReference: docSnapLaptop.reference,
     );
   }
 
-  Future<void> capNhat(Laptop lt) async{
+  Future<void> capNhat(Laptop lt) async {
     return documentReference!.update(lt.toJson());
   }
 
@@ -55,33 +55,32 @@ class LaptopSnapShot{
     return FirebaseFirestore.instance.collection("Laptop").add(lt.toJson());
   }
 
-  static Stream<List<LaptopSnapShot>> dsSVTuFireBase(){
-    Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.
-    collection("Laptop").snapshots();
+  static Stream<List<LaptopSnapShot>> dsSVTuFireBase() {
+    Stream<QuerySnapshot> streamQS =
+    FirebaseFirestore.instance.collection("Laptop").snapshots();
     // Chuyển Stream<QS> --> Stream<List<DS>>
     Stream<List<DocumentSnapshot>> StreamListDocSnap =
     streamQS.map((querySn) => querySn.docs);
 
     //map1: Chuyển Stream<List> --> Stream<List khác kiểu>
     //map2: Chuyển List<DS> --> List<SVS>
-    return StreamListDocSnap.map((
-        listDocSnap) =>
-        listDocSnap.map((docSnap) => LaptopSnapShot.fromSnapShot(docSnap)).toList()
-    );
+    return StreamListDocSnap.map((listDocSnap) =>
+        listDocSnap.map((docSnap) => LaptopSnapShot.fromSnapShot(docSnap)).toList());
   }
 
   // rút gọn dsSVTuFireBase
-  static Stream<List<LaptopSnapShot>> getAll(){
-    Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.collection("Laptop").snapshots();
+  static Stream<List<LaptopSnapShot>> getAll() {
+    Stream<QuerySnapshot> streamQS =
+    FirebaseFirestore.instance.collection("Laptop").snapshots();
     return streamQS.map((qs) => qs.docs)
         .map((listDocSnap) => listDocSnap.map((docSnap) =>
         LaptopSnapShot.fromSnapShot(docSnap)).toList());
   }
 
-  static Stream<List<LaptopSnapShot>> getAll2(){
-    Stream<QuerySnapshot> streamQS = FirebaseFirestore.instance.collection("Laptop").snapshots();
-    return streamQS.map((qs) => qs.docs.map((docSnap) => LaptopSnapShot.fromSnapShot(docSnap)).toList()
-    );
+  static Stream<List<LaptopSnapShot>> getAll2() {
+    Stream<QuerySnapshot> streamQS =
+    FirebaseFirestore.instance.collection("Laptop").snapshots();
+    return streamQS.map((qs) => qs.docs.map((docSnap) => LaptopSnapShot.fromSnapShot(docSnap)).toList());
   }
 
   static Future<List<LaptopSnapShot>> dsLaptopTuFirebaseOneTime() async {
@@ -89,3 +88,5 @@ class LaptopSnapShot{
     return qs.docs.map((doc) => LaptopSnapShot.fromSnapShot(doc)).toList();
   }
 }
+
+
