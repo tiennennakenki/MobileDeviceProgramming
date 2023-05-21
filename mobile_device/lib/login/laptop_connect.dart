@@ -5,25 +5,29 @@ import 'package:mobile_device/login/page_login.dart';
 import 'package:mobile_device/product/product_detail.dart';
 import 'package:mobile_device/register/page_register.dart';
 
+import '../cart/Cart.dart';
+import '../cart/CartScreen.dart';
 import '../firebase/firebase_connect.dart';
 
 class LaptopInterface extends StatelessWidget {
-  const LaptopInterface({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  const LaptopInterface({Key? key, required this.isLoggedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MyFireBaseConnect(
       errorMessage: "Lỗi",
       connectingMessage: "Đang kết nối",
-      builder: (context) => PageLaptop(laptop: Laptop(),),
+      builder: (context) => PageLaptop(laptop: Laptop(), isLoggedIn: isLoggedIn),
     );
   }
 }
 
+
 class PageLaptop extends StatelessWidget {
   final Laptop laptop;
-  PageLaptop({required this.laptop});
-
+  PageLaptop({required this.laptop, required this.isLoggedIn});
+  final bool isLoggedIn;
 
   @override
   Widget build(BuildContext context) {
@@ -31,33 +35,20 @@ class PageLaptop extends StatelessWidget {
       appBar: AppBar(
         title: Text("Firebase App"),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text("Phan Minh Tiến"),
-              accountEmail: Text("tien.pm.62cntt@ntu.edu.vn"),
-              currentAccountPicture: CircleAvatar(
-                //child: Text("MT"),
-                backgroundImage: AssetImage("asset/images/img.png"),
-              ),
-            ),
-
-            ListTile(
-              leading: Icon(Icons.login),
-              title: Text("Đăng nhập"),
-              onTap: () {
-                // Xử lý khi nhấn vào nút đăng nhập
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
+      drawer: isLoggedIn ?
+        null :
+          Drawer(
+            child: Column(
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text("Phan Minh Tiến"),
+                  accountEmail: Text("tien.pm.62cntt@ntu.edu.vn"),
+                  currentAccountPicture: CircleAvatar(
+                    //child: Text("MT"),
+                    backgroundImage: AssetImage("asset/images/img.png"),
                   ),
-                );
-              },
-            ),
-
-            ListTile(
+                ),
+              ListTile(
               leading: Icon(Icons.login),
               title: Text("Đăng ký"),
               onTap: () {
@@ -70,10 +61,35 @@ class PageLaptop extends StatelessWidget {
                 );
               },
             ),
-
+              ListTile(
+              leading: Icon(Icons.shopping_cart),
+              title: Text("Giỏ hàng"),
+              onTap: () {
+                // Điều hướng đến màn hình giỏ hàng ở đây
+                // Ví dụ:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
+              },
+            ),
+              ListTile(
+                  leading: Icon(Icons.login),
+                  title: Text("Đăng nhập"),
+                  onTap: () {
+                    // Xử lý khi nhấn vào nút đăng nhập
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  },
+                ),
           ],
-        ),
-      ),
+        ),),
       body: StreamBuilder<List<LaptopSnapShot>>(
           stream: LaptopSnapShot.getAll2(),
           builder: (context, snapshot) {
@@ -126,7 +142,7 @@ class PageLaptop extends StatelessWidget {
                    ),
                  )
                      .toList(),
-               
+
                  //ListView.builder(
               //   itemCount: list.length,
               //   itemBuilder: (context, index) => ListTile(

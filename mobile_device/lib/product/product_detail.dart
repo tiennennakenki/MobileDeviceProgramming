@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_device/firebase/firebase_data.dart';
+import '../cart/Cart.dart';
+import '../firebase/firebase_data.dart';
 
 class ProductDetail extends StatelessWidget {
   final Laptop laptop;
@@ -35,7 +36,6 @@ class ProductDetail extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.red[500]),
               ),
               SizedBox(width: 20),
-
             ],
           ),
           SizedBox(height: 20),
@@ -48,7 +48,6 @@ class ProductDetail extends StatelessWidget {
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(width: 20),
-
             ],
           ),
           SizedBox(height: 15),
@@ -62,9 +61,32 @@ class ProductDetail extends StatelessWidget {
               const Icon(Icons.star, color: Colors.grey),
             ],
           ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Cart.instance.addToCart(laptop); // Thêm mặt hàng vào giỏ hàng khi người dùng bấm nút
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Thêm vào giỏ hàng'),
+                    content: Text('Đã thêm ${laptop.ten} vào giỏ hàng.'),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Navigator.pop(context); // Đóng hộp thoại
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: const Text('Thêm vào giỏ hàng'),
+          ),
         ],
       ),
     );
   }
-  }
-
+}
