@@ -5,6 +5,8 @@ import 'package:mobile_device/login/page_login.dart';
 import 'package:mobile_device/product/product_detail.dart';
 import 'package:mobile_device/register/page_register.dart';
 
+import '../cart/Cart.dart';
+import '../cart/CartScreen.dart';
 import '../firebase/firebase_connect.dart';
 
 class LaptopInterface extends StatelessWidget {
@@ -70,7 +72,20 @@ class PageLaptop extends StatelessWidget {
                 );
               },
             ),
-
+            ListTile(
+              leading: Icon(Icons.shopping_cart),
+              title: Text("Giỏ hàng"),
+              onTap: () {
+                // Điều hướng đến màn hình giỏ hàng ở đây
+                // Ví dụ:
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -126,7 +141,7 @@ class PageLaptop extends StatelessWidget {
                    ),
                  )
                      .toList(),
-               
+
                  //ListView.builder(
               //   itemCount: list.length,
               //   itemBuilder: (context, index) => ListTile(
