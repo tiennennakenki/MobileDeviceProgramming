@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum Gender { male, female }
 
 class UserPage extends StatefulWidget {
+  final bool isLoggedIn;
+
+  const UserPage({Key? key, required this.isLoggedIn}) : super(key: key);
   @override
-  _UserPageState createState() => _UserPageState();
+  _UserPageState createState() => _UserPageState(isLoggedIn: isLoggedIn);
 }
 
 class _UserPageState extends State<UserPage> {
@@ -13,24 +17,36 @@ class _UserPageState extends State<UserPage> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   Gender _selectedGender = Gender.male;
+  final bool isLoggedIn;
+
+  _UserPageState({required this.isLoggedIn});
 
   @override
-  void dispose() {
-    _nameController.dispose();
-    _addressController.dispose();
-    _phoneController.dispose();
-    _emailController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadUserInfo();
   }
 
-  void _updateUserInfo() {
-    String name = _nameController.text;
-    String address = _addressController.text;
-    String phone = _phoneController.text;
-    String email = _emailController.text;
-    String gender = _selectedGender == Gender.male ? 'Nam' : 'Nữ';
+  Future<void> _loadUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    // TODO: Lưu thông tin cập nhật vào database hoặc nơi lưu trữ khác
+    setState(() {
+      _nameController.text = prefs.getString('name') ?? '';
+      _addressController.text = prefs.getString('address') ?? '';
+      _phoneController.text = prefs.getString('phone') ?? '';
+      _emailController.text = prefs.getString('email') ?? '';
+      _selectedGender = (prefs.getInt('gender') ?? 0) == 0 ? Gender.male : Gender.female;
+    });
+  }
+
+  Future<void> _updateUserInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('name', _nameController.text);
+    await prefs.setString('address', _addressController.text);
+    await prefs.setString('phone', _phoneController.text);
+    await prefs.setString('email', _emailController.text);
+    await prefs.setInt('gender', _selectedGender == Gender.male ? 0 : 1);
 
     showDialog(
       context: context,

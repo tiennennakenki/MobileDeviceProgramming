@@ -56,7 +56,7 @@ class Products extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProductDetail(
+                            builder: (context) => AppCatalog(
                               laptop: Laptop(
                                 ten: sp.laptop!.ten,
                                 gia: sp.laptop!.gia,

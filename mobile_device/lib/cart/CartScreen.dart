@@ -60,11 +60,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Cart.instance;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Giỏ hàng'),
-      ),
-      body: Column(
+    return Column(
         children: [
           Expanded(
             child: ListView.builder(
@@ -130,7 +126,6 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

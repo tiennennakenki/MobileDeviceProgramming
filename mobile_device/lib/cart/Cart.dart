@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import '../firebase/firebase_data.dart';
 
-class Cart {
+
+class Cart extends ChangeNotifier{
   static Cart? _instance;
   List<Laptop> _items = [];
   List<VoidCallback> _listeners = [];
+  int get slMH_GioHang => _items.length;
 
-  Cart._();
+  Cart();
 
   static Cart get instance {
-    _instance ??= Cart._();
+    _instance ??= Cart();
     return _instance!;
   }
 
