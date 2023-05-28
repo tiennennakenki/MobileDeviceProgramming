@@ -10,29 +10,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59be8b34-8a26-42bc-80b2-6418034ce6a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/mobile_device/asset/images/logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_device/lib/home/Bài báo cáo Lập trình thiết bị di động_Nhóm 3_Lớp 62CNTT-3.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mobile_device/lib/home/~$i báo cáo Lập trình thiết bị di động_Nhóm 3_Lớp 62CNTT-3.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/.filecache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/app.dill" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/kernel_snapshot.d" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/kernel_snapshot.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/kernel_snapshot.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/4d76e0fc5c9c40dea7724c352405b2d7/kernel_snapshot.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/dart_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/flutter_build/dart_plugin_registrant.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.dart_tool/package_config_subset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/4f2a58af27abc49ecf55570043bbf938.cache.dill.track.dill" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/compressed_assets/debug/out/assets/flutter_assets/kernel_blob.bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/compressed_assets/debug/out/assets/flutter_assets/kernel_blob.bin.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/build/app/outputs/apk/debug/output-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/outputs/apk/debug/output-metadata.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/build/app/outputs/flutter-apk/app-debug.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/build/app/outputs/flutter-apk/app-debug.apk.sha1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/cart/Cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/cart/Cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/cart/CartScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/cart/CartScreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/firebase/controller/controller_firebase.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/firebase/controller/controller_firebase.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/firebase/firebase_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/firebase/firebase_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/home/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/home/home_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/login/auth_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/login/auth_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/login/page_login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/login/page_login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/product/general_interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/product/general_interface.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/product/product_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/product/product_detail.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/product/products.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/product/products.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/register/page_register.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/register/page_register.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile_device/lib/user/user_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/lib/user/user_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile_device/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/mobile_device/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
