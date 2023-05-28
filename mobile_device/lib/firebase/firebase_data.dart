@@ -2,9 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Laptop {
-  String? ten, thuongHieu, moTa, hinhAnh, gia;
+  String? ten, mauSac, thuongHieu, moTa, hinhAnh, gia,boXuLy,doHoa,heDieuHanh,luuTru,manHinh,ram;
+  int quantity;
 
-  Laptop({this.ten, this.thuongHieu, this.moTa, this.hinhAnh, this.gia});
+  Laptop({
+      this.ten,
+      this.thuongHieu,
+      this.moTa,
+      this.hinhAnh,
+      this.gia,
+      this.boXuLy,
+      this.doHoa,
+      this.heDieuHanh,
+      this.luuTru,
+      this.manHinh,
+      this.ram,
+      this.mauSac,
+      this.quantity = 1}); // Thêm thuộc tính quantity
 
   Map<String, dynamic> toJson() {
     return {
@@ -13,6 +27,13 @@ class Laptop {
       'moTa': this.moTa,
       'hinhAnh': this.hinhAnh,
       'gia': this.gia,
+      'boXuLy': this.boXuLy,
+      'doHoa': this.doHoa,
+      'heDieuHanh': this.heDieuHanh,
+      'luuTru': this.luuTru,
+      'manHinh': this.manHinh,
+      'mauSac': this.mauSac,
+      'ram': this.ram,
     };
   }
 
@@ -23,6 +44,13 @@ class Laptop {
       moTa: map['moTa'] as String,
       hinhAnh: map['hinhAnh'] as String,
       gia: map['gia'] as String,
+      boXuLy: map['boXuLy'] as String,
+      doHoa: map['doHoa'] as String,
+      heDieuHanh: map['heDieuHanh'] as String,
+      luuTru: map['luuTru'] as String,
+      manHinh: map['manHinh'] as String,
+      ram: map['ram'] as String,
+      mauSac: map['mauSac'] as String,
     );
   }
 }

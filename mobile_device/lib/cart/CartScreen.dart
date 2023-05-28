@@ -5,29 +5,64 @@ import '../product/product_detail.dart';
 
 class CartScreen extends StatefulWidget {
   final bool isLoggedIn;
-  const CartScreen({super.key, required this.isLoggedIn});
+  const CartScreen({Key? key, required this.isLoggedIn}) : super(key: key);
+
   @override
-  _CartScreenState createState() => _CartScreenState(isLoggedIn: isLoggedIn);
+  _CartScreenState createState() => _CartScreenState();
+}
+
+String numberWithCommas(String? numberString) {
+  if (numberString!.isEmpty) {
+    return '';
+  }
+
+  final num number = num.parse(numberString);
+  final String formattedString = number.toStringAsFixed(0);
+  final List<String> parts = formattedString.split('');
+
+  final List<String> formattedParts = [];
+  int count = 0;
+  for (int i = parts.length - 1; i >= 0; i--) {
+    count++;
+    formattedParts.add(parts[i]);
+    if (count == 3 && i != 0) {
+      formattedParts.add('.');
+      count = 0;
+    }
+  }
+
+  return formattedParts.reversed.join('');
 }
 
 class _CartScreenState extends State<CartScreen> {
-  final bool isLoggedIn;
+  late Cart cart;
+  double totalPrice = 0.0;
 
-  _CartScreenState({required this.isLoggedIn});
   @override
   void initState() {
     super.initState();
-    Cart.instance.addCartListener(cartChanged);
+    cart = Cart.instance;
+    calculateTotalPrice();
+    cart.addCartListener(cartChanged);
   }
 
   @override
   void dispose() {
-    Cart.instance.removeCartListener(cartChanged);
+    cart.removeCartListener(cartChanged);
     super.dispose();
   }
 
   void cartChanged() {
+    calculateTotalPrice();
     setState(() {});
+  }
+
+  void calculateTotalPrice() {
+    double price = 0.0;
+    for (var item in cart.items) {
+      final double? gia = double.tryParse(item.gia ?? '');
+      price += (gia ?? 0.0) * item.quantity;    }
+    totalPrice = price;
   }
 
   void showDeleteConfirmationDialog(Laptop laptop) {
@@ -47,7 +82,7 @@ class _CartScreenState extends State<CartScreen> {
             TextButton(
               child: Text('Xóa'),
               onPressed: () {
-                Cart.instance.removeFromCart(laptop);
+                cart.removeFromCart(laptop);
                 Navigator.of(context).pop();
               },
             ),
@@ -59,78 +94,97 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Cart.instance;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Giỏ hàng'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: cart.items.length,
-              itemBuilder: (context, index) {
-                final laptop = cart.items[index];
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: cart.items.length,
+            itemBuilder: (context, index) {
+              final laptop = cart.items[index];
 
-                return ListTile(
-                  leading: Image.network(
-                    laptop.hinhAnh!,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+              return Container(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 2.0,
+                  child: InkWell(
+                    onTap: () {
+                      // Xử lý khi người dùng nhấn vào ListTile
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Image.network(
+                            laptop.hinhAnh!,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        SizedBox(width: 8,),
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                laptop.ten!,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 8.0),
+                              Text('Số lượng: ${laptop.quantity}'),
+                              Text(
+                                'Giá: ${(int.tryParse(laptop.gia ?? '') ?? 0.0) * laptop.quantity} VND',
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.remove),
+                          onPressed: () {
+                            cart.decreaseQuantity(laptop);
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () {
+                            cart.increaseQuantity(laptop);
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            showDeleteConfirmationDialog(laptop);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  title: Text(laptop.ten!),
-                  subtitle: Text('Số lượng: 1'),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          showDeleteConfirmationDialog(laptop);
-                        },
-                      ),
-                      Text('Giá: ${laptop.gia} VND'),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetail(laptop: Laptop(
-                          ten: laptop.ten,
-                          gia: laptop.gia,
-                          hinhAnh: laptop.hinhAnh,
-                          moTa: laptop.moTa,
-                        ), isLoggedIn: isLoggedIn, ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  'Tổng cộng: ${cart.totalPrice.toStringAsFixed(0)} VND',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Xử lý khi người dùng bấm vào nút thanh toán
-                  },
-                  child: Text('Thanh toán'),
-                ),
-              ],
-            ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                'Tổng cộng: ${numberWithCommas(totalPrice.toStringAsFixed(0))} VND',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  // Xử lý khi người dùng bấm vào nút thanh toán
+                },
+                child: Text('Thanh toán'),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

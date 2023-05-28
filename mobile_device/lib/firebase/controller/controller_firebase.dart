@@ -18,7 +18,6 @@ class ControllerFirebase2 extends GetxController{
 
   List<LaptopSnapShot> get listSVSN => _listSVSN.value;
 
-
   @override
   void onInit() {
     super.onInit();

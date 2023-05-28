@@ -7,23 +7,48 @@ import '../firebase/firebase_data.dart';
 
 class ProductsPage extends StatelessWidget {
   final bool isLoggedIn;
-  const ProductsPage({Key? key, required this.isLoggedIn}) : super(key: key);
+  final String searchKeyword;
+  const ProductsPage({Key? key, required this.isLoggedIn, required  this.searchKeyword}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MyFireBaseConnect(
       errorMessage: "Lỗi",
       connectingMessage: "Đang kết nối",
-      builder: (context) => Products(laptop: Laptop(), isLoggedIn: isLoggedIn),
+      builder: (context) => Products(laptop: Laptop(), isLoggedIn: isLoggedIn, searchKeyword: searchKeyword),
     );
   }
+}
+
+String numberWithCommas(String? numberString) {
+  if (numberString!.isEmpty) {
+    return '';
+  }
+
+  final num number = num.parse(numberString);
+  final String formattedString = number.toStringAsFixed(0);
+  final List<String> parts = formattedString.split('');
+
+  final List<String> formattedParts = [];
+  int count = 0;
+  for (int i = parts.length - 1; i >= 0; i--) {
+    count++;
+    formattedParts.add(parts[i]);
+    if (count == 3 && i != 0) {
+      formattedParts.add('.');
+      count = 0;
+    }
+  }
+
+  return formattedParts.reversed.join('');
 }
 
 class Products extends StatelessWidget {
   final Laptop laptop;
   final bool isLoggedIn;
+  List<LaptopSnapShot> dsSach = [];
 
-  const Products({Key? key, required this.laptop, required this.isLoggedIn}) : super(key: key);
+  Products({Key? key, required this.laptop, required this.isLoggedIn, required searchKeyword}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +81,21 @@ class Products extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProductDetail(
+                            builder: (context) => AppCatalog(
                               laptop: Laptop(
                                 ten: sp.laptop!.ten,
                                 gia: sp.laptop!.gia,
                                 hinhAnh: sp.laptop!.hinhAnh,
                                 moTa: sp.laptop!.moTa,
+                                boXuLy: sp.laptop!.boXuLy,
+                                ram: sp.laptop!.ram,
+                                heDieuHanh: sp.laptop!.heDieuHanh,
+                                luuTru: sp.laptop!.luuTru,
+                                thuongHieu: sp.laptop!.thuongHieu,
+                                doHoa: sp.laptop!.doHoa,
+                                mauSac: sp.laptop!.mauSac,
+                                manHinh: sp.laptop!.manHinh,
+
                               ),
                               isLoggedIn: isLoggedIn,
                             ),
@@ -71,21 +105,26 @@ class Products extends StatelessWidget {
                       child: Card(
                         elevation: 1,
                         shadowColor: Colors.blue,
-                        child: Column(
-                          children: [
-                            Image.network(
-                              "${sp.laptop!.hinhAnh}",
-                              fit: BoxFit.cover,
-                              width: double.infinity,
-                              height: 150,
-                            ),
-                            Text("${sp.laptop!.ten}"),
-                            Text(
-                              "Giá: ${sp.laptop!.gia} VNĐ",
-                              style: TextStyle(color: Colors.red),
-                            ),
-                          ],
-                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Image.network(
+                                "${sp.laptop!.hinhAnh}",
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                height: 150,
+                              ),
+                              Text(
+                                "${sp.laptop!.ten}",
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                "Giá: ${numberWithCommas(sp.laptop!.gia)} VNĐ",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        )
                       ),
                     ),
                   )
