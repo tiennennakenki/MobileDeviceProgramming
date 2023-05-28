@@ -1,24 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../login/auth_service.dart';
+import '../login/page_login.dart';
+import '../product/products.dart';
+import '../register/page_register.dart';
+
 enum Gender { male, female }
 
 class UserPage extends StatefulWidget {
   final bool isLoggedIn;
 
   const UserPage({Key? key, required this.isLoggedIn}) : super(key: key);
+
   @override
-  _UserPageState createState() => _UserPageState(isLoggedIn: isLoggedIn);
+  State<UserPage> createState() => isLoggedIn
+      ? _UserPageState(isLoggedIn: isLoggedIn)
+      : _UserPageNotLogin();
+}
+
+class _UserPageNotLogin extends State<UserPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Tài khoản"),
+      ),
+      body: Column(
+        children: [
+          ListTile(
+            leading: Icon(Icons.login),
+            title: Text("Đăng ký"),
+            onTap: () {
+              // Xử lý khi nhấn vào nút đăng ký
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RegisterPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.login),
+            title: Text("Đăng nhập"),
+            onTap: () {
+              // Xử lý khi nhấn vào nút đăng nhập
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginPage(isLoggedIn: false),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+// TODO: Thêm phương thức setState và các trạng thái cần thiết tại đây
 }
 
 class _UserPageState extends State<UserPage> {
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _addressController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   Gender _selectedGender = Gender.male;
   final bool isLoggedIn;
-
   _UserPageState({required this.isLoggedIn});
 
   @override
@@ -35,9 +87,12 @@ class _UserPageState extends State<UserPage> {
       _addressController.text = prefs.getString('address') ?? '';
       _phoneController.text = prefs.getString('phone') ?? '';
       _emailController.text = prefs.getString('email') ?? '';
-      _selectedGender = (prefs.getInt('gender') ?? 0) == 0 ? Gender.male : Gender.female;
+      _selectedGender = (prefs.getInt('gender') ?? 0) == 0
+          ? Gender.male
+          : Gender.female;
     });
   }
+
 
   Future<void> _updateUserInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -68,115 +123,136 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
+  Future<void> _logout() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginPage(isLoggedIn: false),
+      ),
+          (route) => false, // Xóa tất cả các màn hình còn lại trong stack
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Thông tin người dùng'),
+        actions: [
+          IconButton(
+            onPressed: _logout,
+            icon: Icon(Icons.logout),
+          ),
+        ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Họ tên',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Giới tính',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 8.0),
-            Row(
-              children: [
-                Radio(
-                  value: Gender.male,
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value as Gender;
-                    });
-                  },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Họ tên',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                Text('Nam'),
-                Radio(
-                  value: Gender.female,
-                  groupValue: _selectedGender,
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedGender = value as Gender;
-                    });
-                  },
+              ),
+              SizedBox(height: 8.0),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
                 ),
-                Text('Nữ'),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Địa chỉ',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(height: 8.0),
-            TextFormField(
-              controller: _addressController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+              SizedBox(height: 16.0),
+              Text(
+                'Giới tính',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Số điện thoại',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 8.0),
+              Row(
+                children: [
+                  Radio(
+                    value: Gender.male,
+                    groupValue: _selectedGender,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedGender = value as Gender;
+                      });
+                    },
+                  ),
+                  Text('Nam'),
+                  Radio(
+                    value: Gender.female,
+                    groupValue: _selectedGender,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedGender = value as Gender;
+                      });
+                    },
+                  ),
+                  Text('Nữ'),
+                ],
               ),
-            ),
-            SizedBox(height: 8.0),
-            TextFormField(
-              controller: _phoneController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+              SizedBox(height: 16.0),
+              Text(
+                'Địa chỉ',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'Email',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 8.0),
+              TextFormField(
+                controller: _addressController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            SizedBox(height: 8.0),
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+              SizedBox(height: 16.0),
+              Text(
+                'Số điện thoại',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              child: Text('Cập nhật'),
-              onPressed: _updateUserInfo,
-            ),
-          ],
+              SizedBox(height: 8.0),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Email',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8.0),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                child: Text('Cập nhật'),
+                onPressed: _updateUserInfo,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(

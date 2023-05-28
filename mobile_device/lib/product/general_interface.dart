@@ -1,9 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_device/firebase/firebase_data.dart';
 import 'package:mobile_device/product/products.dart';
 
+import '../cart/Cart.dart';
 import '../cart/CartScreen.dart';
-import '../firebase/firebase_data.dart';
 import '../home/home_page.dart';
 import '../login/page_login.dart';
 import '../register/page_register.dart';
@@ -34,6 +35,7 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
+  int _cartItemCount = Cart.instance.items.length;
   int _selectedIndex = 0;
   int _currentPageIndex = 0;
   final bool isLoggedIn;
@@ -71,7 +73,11 @@ class _StoreScreenState extends State<StoreScreen> {
       _showUserProfile(context);
     }
   }
-
+  void cartChanged() {
+    setState(() {
+      _cartItemCount = Cart.instance.items.length;
+    });
+  }
   void _showSearchDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -114,8 +120,9 @@ class _StoreScreenState extends State<StoreScreen> {
                       child: Text('Tìm kiếm'),
                       onPressed: () {
                         // Xử lý tìm kiếm ở đây
-                        print('Đã tìm kiếm: $searchKeyword');
-
+                        Navigator.push(context,MaterialPageRoute(
+                          builder: (context) => ProductsPage(isLoggedIn: isLoggedIn, searchKeyword: searchKeyword),
+                        ),);
                         Navigator.of(context).pop();
                       },
                     ),
@@ -159,53 +166,12 @@ class _StoreScreenState extends State<StoreScreen> {
             ),
         ],
       ),
-      // drawer: isLoggedIn ?
-      //   null :
-      //   Drawer(
-      //     child: Column(
-      //       children: [
-      //         UserAccountsDrawerHeader(
-      //           accountName: Text("Phan Minh Tiến"),
-      //           accountEmail: Text("tien.pm.62cntt@ntu.edu.vn"),
-      //           currentAccountPicture: CircleAvatar(
-      //             //child: Text("MT"),
-      //             backgroundImage: AssetImage("asset/images/img.png"),
-      //           ),
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.login),
-      //           title: Text("Đăng ký"),
-      //           onTap: () {
-      //             // Xử lý khi nhấn vào nút đăng nhập
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                 builder: (context) => RegisterPage(),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.login),
-      //           title: Text("Đăng nhập"),
-      //           onTap: () {
-      //             // Xử lý khi nhấn vào nút đăng nhập
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                 builder: (context) => LoginPage(isLoggedIn: false),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //       ],
-      //     ),),
       body: (() {
         switch (_pagesName[_currentPageIndex]) {
           case 'home':
             return HomePage(laptop: Laptop(), laptopStream: LaptopSnapShot.getAll2());
           case 'products':
-            return ProductsPage(isLoggedIn: widget.isLoggedIn);
+            return ProductsPage(isLoggedIn: widget.isLoggedIn, searchKeyword: '',);
           case 'cart':
             return CartScreen(isLoggedIn: isLoggedIn);
           case 'user':
@@ -216,7 +182,7 @@ class _StoreScreenState extends State<StoreScreen> {
       })(),
 
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Trang chủ',
@@ -226,7 +192,26 @@ class _StoreScreenState extends State<StoreScreen> {
             label: 'Sản phẩm',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
+            icon: Stack(
+              children: [
+                Icon(Icons.shopping_bag),
+                if (_cartItemCount > 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        _cartItemCount.toString(),
+                        style: TextStyle(fontSize: 12, color: Colors.white),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             label: 'Giỏ hàng',
           ),
           BottomNavigationBarItem(
